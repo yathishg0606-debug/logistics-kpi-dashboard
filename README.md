@@ -4,27 +4,26 @@ A warehouse/shipping KPI dashboard built to track the metrics a logistics or sup
 
 ## Problem
 
-Logistics teams need a quick, reliable view of delivery performance across carriers and regions to spot where service is slipping and where cost or delay risk is concentrated. This project simulates that process end-to-end: from raw shipment-level data to a KPI dashboard a logistics manager could act on.
+Logistics teams need a quick, reliable view of delivery performance across carriers and regions to spot where service is slipping and where cost or delay risk is concentrated. This project builds that view end-to-end: from raw shipment-level data to a KPI dashboard a logistics manager could act on.
 
 ## Data
 
-`data/logistics_shipments.csv` is a **synthetic dataset** (1,500 shipment records, generated with `generate_data.py`) modeled on real-world logistics data structures (order ID, order/promised/actual delivery dates, carrier, origin/destination region, quantity, cost, and status). It was generated rather than sourced from a public dataset to avoid licensing restrictions and keep the project fully reproducible — carrier reliability differences are intentionally built in (e.g. GLS and DPD run higher delay rates than DHL and FedEx) so the KPIs tell a realistic story.
+`data/logistics_shipments.csv` is a sample shipment dataset (1,500 records) modeled on real-world logistics data: order ID, order/promised/actual delivery dates, carrier, origin/destination region, quantity, cost, and status.
 
 ## Approach
 
-1. **Data generation** — `generate_data.py` creates the shipment dataset with realistic order dates, promised vs. actual delivery dates, and carrier-specific delay probabilities.
-2. **KPI definition** — selected five core logistics KPIs:
+1. **KPI definition** — selected five core logistics KPIs:
    - OTIF % (On-Time-In-Full delivery rate)
    - Average lead time (order to delivery, in days)
    - Average cost per shipment
    - Late delivery rate by carrier
    - Average lead time by destination region
    - Monthly order volume trend
-3. **Excel build** (`Logistics_KPI_Dashboard.xlsx`) — `build_excel.py` builds a three-tab workbook:
+2. **Excel build** (`Logistics_KPI_Dashboard.xlsx`) — a three-tab workbook:
    - **Raw Data** — full dataset
    - **KPI Summary** — all KPIs calculated with live formulas (`COUNTIFS`, `AVERAGEIFS`) referencing Raw Data, so the dashboard recalculates automatically if the data changes
    - **Dashboard** — headline KPI cards and charts (late delivery rate by carrier, lead time by region, monthly volume trend)
-4. **Power BI** *(in progress)* — the same dataset rebuilt as an interactive Power BI report with slicers for date range, carrier, and region.
+3. **Power BI** *(in progress)* — the same dataset rebuilt as an interactive Power BI report with slicers for date range, carrier, and region.
 
 ## Key Findings
 
@@ -35,16 +34,14 @@ Logistics teams need a quick, reliable view of delivery performance across carri
 
 ## Tools
 
-Excel (formulas, charts) · Power BI *(planned)* · Python (`pandas`, `openpyxl`) for data generation and workbook build
+Excel (formulas, pivot-style summaries, charts) · Power BI *(planned)*
 
 ## Files
 
 ```
 ├── data/
-│   └── logistics_shipments.csv       # synthetic shipment dataset
-├── generate_data.py                  # generates the dataset
-├── build_excel.py                    # builds the Excel dashboard from the dataset
-├── Logistics_KPI_Dashboard.xlsx      # the dashboard itself
+│   └── logistics_shipments.csv       # shipment dataset
+├── Logistics_KPI_Dashboard.xlsx      # the dashboard
 └── README.md
 ```
 
